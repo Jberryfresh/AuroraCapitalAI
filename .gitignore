@@ -1,0 +1,8 @@
+AGENTS-persist.md
+AGENTS.md
+# Agent batch queue (transient; do not commit)
+.agents-queue/
+
+# Common local env
+.env
+.env.local

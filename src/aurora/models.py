@@ -79,10 +79,10 @@ class NewsSentiment(Base):
     published_at = Column(DateTime(timezone=True), nullable=False)
     title = Column(Text, nullable=False)
     summary = Column(Text)
-    source_name = Column(String(255), nullable=False)
-    source_url = Column(Text, nullable=False)
-    sentiment_score = Column(Numeric(4, 3))
-    sentiment_magnitude = Column(Numeric(4, 3))
+    source = Column(String(255), nullable=False)  # News source name
+    url = Column(Text, unique=True, nullable=False)  # News article URL
+    sentiment_score = Column(Numeric(4, 3))  # Alpha Vantage's overall_sentiment_score
+    sentiment_label = Column(String(20))  # Alpha Vantage's overall_sentiment_label
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationships
@@ -91,7 +91,6 @@ class NewsSentiment(Base):
     # Constraints
     __table_args__ = (
         CheckConstraint('sentiment_score >= -1 AND sentiment_score <= 1'),
-        CheckConstraint('sentiment_magnitude >= 0 AND sentiment_magnitude <= 1')
     )
 
 class ResearchReport(Base):
@@ -102,7 +101,7 @@ class ResearchReport(Base):
     report_type = Column(String(50), nullable=False)
     report_date = Column(Date, nullable=False)
     content = Column(Text, nullable=False)
-    metadata = Column(JSON, nullable=False, server_default='{}')
+    report_metadata = Column(JSON, nullable=False, server_default='{}')
     data_sources = Column(JSON, nullable=False, server_default='{}')
     agent_versions = Column(JSON, nullable=False, server_default='{}')
     created_at = Column(DateTime(timezone=True), server_default=func.now())

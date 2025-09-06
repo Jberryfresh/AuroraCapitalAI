@@ -1,0 +1,16 @@
+LICENSE
+README.md
+pyproject.toml
+src/aurora/__init__.py
+src/aurora/config.py
+src/aurora/database.py
+src/aurora/models.py
+src/aurora/schemas.py
+src/aurora/agents/__init__.py
+src/aurora/agents/base.py
+src/aurora/agents/data_ingestion.py
+src/aurora_capital_ai.egg-info/PKG-INFO
+src/aurora_capital_ai.egg-info/SOURCES.txt
+src/aurora_capital_ai.egg-info/dependency_links.txt
+src/aurora_capital_ai.egg-info/requires.txt
+src/aurora_capital_ai.egg-info/top_level.txt

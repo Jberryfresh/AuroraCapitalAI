@@ -1,0 +1,153 @@
+Metadata-Version: 2.4
+Name: aurora-capital-ai
+Version: 0.1.0
+Summary: AI-driven research and strategy platform for publicly traded equities
+Author-email: Your Name <your.email@example.com>
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: OS Independent
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Financial and Insurance Industry
+Classifier: Topic :: Office/Business :: Financial :: Investment
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: sqlalchemy>=2.0.0
+Requires-Dist: psycopg2-binary>=2.9.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: yfinance>=0.2.0
+Requires-Dist: alpha_vantage>=2.3.1
+Requires-Dist: finnhub-python>=2.4.0
+Requires-Dist: fastapi>=0.100.0
+Requires-Dist: uvicorn>=0.22.0
+Requires-Dist: requests>=2.31.0
+Requires-Dist: aiohttp>=3.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: isort>=5.0.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Requires-Dist: jupyter>=1.0.0; extra == "dev"
+Dynamic: license-file
+
+# Aurora Capital AI
+
+> **IMPORTANT**: This software is for educational and research purposes only. Not financial advice.
+
+## Overview
+
+Aurora Capital AI is a multi-agent system for analyzing publicly traded equities. It combines fundamental analysis, sentiment analysis, and historical patterns to generate research reports.
+
+## ⚠️ Disclaimers
+
+**IMPORTANT: READ CAREFULLY**
+
+1. **Not Financial Advice**: 
+   - This software and its outputs are for educational and informational purposes only.
+   - Nothing in this project constitutes financial advice, investment advice, trading advice or any other kind of advice.
+   - Do not make investment decisions based solely on this software.
+
+2. **No Warranty**:
+   - This software is provided "as is" without any warranties of any kind.
+   - We make no guarantees about accuracy, reliability, or suitability for any purpose.
+
+3. **Risk Warning**:
+   - Trading and investing in financial markets involves substantial risk of loss.
+   - Past performance is not indicative of future results.
+   - Users are solely responsible for their investment decisions.
+
+## Features
+
+### Phase 1 (Current)
+- Fetch stock fundamentals and market data
+- Analyze news sentiment
+- Generate research reports with clear source citations
+- Support for custom watchlists
+- All outputs framed explicitly as "research only"
+
+### Future Phases
+- Portfolio simulation and scenario analysis
+- Broker API integrations (read-only)
+- Advanced analytics and reporting
+
+## Technology Stack
+
+- Python 3.11+
+- PostgreSQL 16
+- SQLAlchemy
+- Pandas/NumPy
+- Docker
+- n8n (workflow automation)
+
+## Getting Started
+
+### Prerequisites
+- Docker and Docker Compose
+- Python 3.11 or higher
+- PostgreSQL 16
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/AuroraCapitalAI.git
+   cd AuroraCapitalAI
+   ```
+
+2. Create and activate virtual environment:
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Start PostgreSQL:
+   ```bash
+   docker compose up -d
+   ```
+
+5. Set up environment:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
+
+## Project Structure
+
+```
+AuroraCapitalAI/
+├── aurora/              # Main package
+│   ├── agents/         # AI agents
+│   ├── models/        # Database models
+│   └── utils/         # Utilities
+├── data/              # Data storage
+├── docs/              # Documentation
+├── scripts/           # Helper scripts
+├── sql/              # Database migrations
+└── tests/            # Test suite
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License with additional restrictions - see [LICENSE](LICENSE) file.
+
+## Acknowledgments
+
+- Built with OpenAI's GPT models
+- Powered by various open-source libraries and tools
+- Market data provided by [list your data sources]

@@ -80,7 +80,7 @@ class ResearchReportBase(BaseModel):
     report_type: str
     report_date: date
     content: str
-    metadata: Dict[str, Any] = {}
+    report_metadata: Dict[str, Any] = {}
     data_sources: Dict[str, Any] = {}
     agent_versions: Dict[str, Any] = {}
 

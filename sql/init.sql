@@ -56,10 +56,10 @@ CREATE TABLE IF NOT EXISTS news_sentiment (
     published_at TIMESTAMP WITH TIME ZONE NOT NULL,
     title TEXT NOT NULL,
     summary TEXT,
-    source_name VARCHAR(255) NOT NULL,
-    source_url TEXT NOT NULL,
+    source VARCHAR(255) NOT NULL,
+    url TEXT NOT NULL UNIQUE,
     sentiment_score DECIMAL(4,3) CHECK (sentiment_score >= -1 AND sentiment_score <= 1),
-    sentiment_magnitude DECIMAL(4,3) CHECK (sentiment_magnitude >= 0 AND sentiment_magnitude <= 1),
+    sentiment_label VARCHAR(20),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -1,0 +1,84 @@
+    async def fetch_news_sentiment(self, ticker: str) -> List[Dict[str, Any]]:
+        """Fetch news and sentiment data for a company."""
+        if not self.alpha_vantage_key:
+            self.log_activity(f"Skipping news fetch for {ticker}: No API key", level="WARN")
+            return []
+
+        try:
+            news_api = AsyncNewsAPI(key=self.alpha_vantage_key)
+            
+            # Get news for the last 30 days
+            end_date = datetime.utcnow()
+            start_date = end_date - timedelta(days=30)
+            
+            async with aiohttp.ClientSession() as session:
+                # Fetch news with sentiment analysis
+                news_data = await news_api.get_news_sentiment(
+                    session,
+                    ticker,
+                    time_from=start_date.strftime("%Y%m%dT%H%M"),
+                    time_to=end_date.strftime("%Y%m%dT%H%M"),
+                    limit=50  # Adjust based on your needs
+                )
+                
+                if not news_data or "items" not in news_data:
+                    return []
+                
+                # Transform into our schema
+                news_items = []
+                for item in news_data["items"]:
+                    # Skip items without sentiment
+                    if "sentiment_score" not in item:
+                        continue
+                        
+                    news_items.append({
+                        "title": item["title"],
+                        "summary": item.get("summary", ""),
+                        "source_name": item.get("source", ""),
+                        "source_url": item.get("url", ""),
+                        "published_at": datetime.strptime(
+                            item["time_published"], 
+                            "%Y%m%dT%H%M%S"
+                        ),
+                        "sentiment_score": float(item["sentiment_score"]),
+                        "sentiment_magnitude": abs(float(item["sentiment_score"]))
+                    })
+                
+                return news_items
+                
+        except Exception as e:
+            self.log_activity(
+                f"Error fetching news for {ticker}: {str(e)}", 
+                level="ERROR"
+            )
+            return []
+
+    async def store_news_data(self, company_id: int, news_items: List[Dict[str, Any]]) -> None:
+        """Store news items in the database."""
+        if not self.session:
+            raise RuntimeError("Database session not initialized")
+            
+        try:
+            for item in news_items:
+                # Check for existing news with same title and date
+                stmt = select(NewsSentiment).where(
+                    NewsSentiment.company_id == company_id,
+                    NewsSentiment.title == item["title"],
+                    NewsSentiment.published_at == item["published_at"]
+                )
+                existing = self.session.execute(stmt).scalar_one_or_none()
+                
+                if existing:
+                    # Update existing record
+                    for key, value in item.items():
+                        setattr(existing, key, value)
+                else:
+                    # Create new record
+                    news = NewsSentiment(company_id=company_id, **item)
+                    self.session.add(news)
+            
+            self.session.commit()
+            
+        except Exception as e:
+            self.session.rollback()
+            raise DataFetchError(f"Failed to store news data: {str(e)}")
