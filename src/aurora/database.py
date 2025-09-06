@@ -1,5 +1,4 @@
-from datetime import datetime
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 from aurora.config import SQLALCHEMY_DATABASE_URL
