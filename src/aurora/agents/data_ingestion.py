@@ -3,7 +3,7 @@ from typing import List, Dict, Any, Optional
 import asyncio
 import aiohttp
 import yfinance as yf
-from datetime import datetime, timedelta
+from datetime import datetime
 import os
 
 from sqlalchemy.orm import Session
